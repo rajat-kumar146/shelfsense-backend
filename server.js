@@ -42,6 +42,11 @@ app.use("/api/", rateLimit({
   message: { error: "Too many requests, please try again later." },
 }));
 
+app.get("/", (req, res) => {
+  res.send("ShelfSense API is running 🚀");
+});
+
+
 // ─── Routes ───────────────────────────────────────────────────────────────────
 app.use("/api/auth",      authRoutes);
 app.use("/api/products",  productRoutes);
