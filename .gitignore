@@ -1,0 +1,12 @@
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/shelfsense
+JWT_SECRET=shelfsense_secret_key
+EMAIL_USER=rajatkumarbehera1462003@gmail.com
+EMAIL_PASS=fywlesqkymijpsmk
+CLIENT_URL=http://localhost:5173
+NODE_ENV=development
+
+
+GEMINI_API_KEY=AIzaSyB_wRmJEv6dn0TOVGehUCL7bWS-vIE7daQ
+
+OPENROUTER_API_KEY=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
