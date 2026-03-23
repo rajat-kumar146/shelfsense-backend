@@ -1,14 +1,13 @@
 /**
  * User Model - Multi-tenant SaaS user schema
  */
-
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
 const reminderSettingsSchema = new mongoose.Schema({
   daysBeforeExpiry: {
     type: [Number],
-    default: [30, 15, 7, 1], // Default reminder days
+    default: [30, 15, 7, 1],
   },
   emailNotifications: {
     type: Boolean,
@@ -40,7 +39,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Password is required"],
       minlength: [6, "Password must be at least 6 characters"],
-      select: false, // Don't return password in queries by default
+      select: false,
     },
     companyName: {
       type: String,
@@ -56,13 +55,18 @@ const userSchema = new mongoose.Schema(
       type: reminderSettingsSchema,
       default: () => ({}),
     },
+    // Browser push notification subscriptions
+    pushSubscriptions: {
+      type: [mongoose.Schema.Types.Mixed],
+      default: [],
+    },
   },
   {
     timestamps: true,
   }
 );
 
-// ─── Hash password before saving ──────────────────────────────────────────────
+// ─── Hash password before saving ─────────────────────────────────────────────
 userSchema.pre("save", async function () {
   if (!this.isModified("password")) return;
   const salt = await bcrypt.genSalt(12);

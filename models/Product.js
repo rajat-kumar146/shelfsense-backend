@@ -57,6 +57,11 @@ const productSchema = new mongoose.Schema(
       type: String,
       maxlength: [500, "Notes cannot exceed 500 characters"],
     },
+    // Optional product image stored as base64
+    imageBase64: {
+      type: String,
+      default: null,
+    },
     // Computed status - updated by cron job
     status: {
       type: String,
@@ -84,7 +89,7 @@ productSchema.virtual("daysUntilExpiry").get(function () {
   return Math.ceil((expiry - today) / (1000 * 60 * 60 * 24));
 });
 
-// ─── Compound index for efficient user+status queries ─────────────────────────
+// ─── Compound indexes for efficient queries ───────────────────────────────────
 productSchema.index({ userId: 1, status: 1 });
 productSchema.index({ userId: 1, expiryDate: 1 });
 productSchema.index({ userId: 1, category: 1 });

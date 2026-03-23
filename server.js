@@ -17,7 +17,9 @@ const productRoutes  = require("./routes/productRoutes");
 const reportRoutes   = require("./routes/reportRoutes");
 const reminderRoutes = require("./routes/reminderRoutes");
 const aiRoutes       = require("./routes/aiRoutes");
-const lookupRoutes   = require("./routes/lookupRoutes");
+const lookupRoutes        = require("./routes/lookupRoutes");
+const notificationRoutes  = require("./routes/notificationRoutes");
+const { router: pushRoutes } = require("./routes/pushRoutes");
 
 // ─── Cron job ─────────────────────────────────────────────────────────────────
 require("./cron/expiryChecker");
@@ -42,18 +44,15 @@ app.use("/api/", rateLimit({
   message: { error: "Too many requests, please try again later." },
 }));
 
-app.get("/", (req, res) => {
-  res.send("ShelfSense API is running 🚀");
-});
-
-
 // ─── Routes ───────────────────────────────────────────────────────────────────
 app.use("/api/auth",      authRoutes);
 app.use("/api/products",  productRoutes);
 app.use("/api/reports",   reportRoutes);
 app.use("/api/reminders", reminderRoutes);
 app.use("/api/ai",        aiRoutes);
-app.use("/api/lookup",    lookupRoutes);
+app.use("/api/lookup",        lookupRoutes);
+app.use("/api/notifications",  notificationRoutes);
+app.use("/api/push",           pushRoutes);
 
 app.get("/api/health", (req, res) => {
   res.json({ status: "OK", message: "ShelfSense API is running" });
